@@ -73,4 +73,8 @@ Rails.application.configure do
 
   # Use default logging formatter so that PID and timestamp are not suppressed.
   config.log_formatter = ::Logger::Formatter.new
+
+  # set environment variables for encryption
+  config.email_encryption_key = ENV['EMAIL_ENCRYPTION_KEY'] 
+  config.password_encryption_key = ENV['PASSWORD_ENCRYPTION_KEY'] 
 end
