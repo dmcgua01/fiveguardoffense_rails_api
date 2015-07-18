@@ -46,4 +46,5 @@ Rails.application.configure do
   # stub environment variables for encryption
   config.email_encryption_key = 'value1'
   config.password_encryption_key = 'value2'
+  config.api_key_encryption_key = 'value3'
 end

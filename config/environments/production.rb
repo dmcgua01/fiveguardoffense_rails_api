@@ -80,4 +80,5 @@ Rails.application.configure do
   # set environment variables for encryption
   config.email_encryption_key = ENV['EMAIL_ENCRYPTION_KEY'] 
   config.password_encryption_key = ENV['PASSWORD_ENCRYPTION_KEY'] 
+  config.api_key_encryption_key = ENV['API_KEY_ENCRYPTION_KEY']
 end
