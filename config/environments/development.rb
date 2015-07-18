@@ -35,8 +35,11 @@ Rails.application.configure do
 
   # Raises error for missing translations
   # config.action_view.raise_on_missing_translations = true
+
+  # set log level
+  config.log_level = :debug
   
-  # Stub environment variables for encryption
+  # stub environment variables for encryption
   config.email_encryption_key = 'value1'
   config.password_encryption_key = 'value2'
 end

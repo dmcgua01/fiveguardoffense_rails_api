@@ -18,22 +18,30 @@ class User
 
   def encrypt_email
     #self.data = [Encryptor.encrypt(:value => self.data, :key => Rails.configuration.encryption_key)].pack('m') unless self.data.blank?
+    Rails.logger.debug "self.email before encryption:::: #{self.email}"
     encrypt(self.email, Rails.configuration.email_encryption_key)
+    Rails.logger.debug "self.email after encryption:::: #{self.email}"
   end
 
   def decrypt_email
     #self.data = Encryptor.decrypt(:value => self.data.unpack('m').first, :key => Rails.configuration.encryption_key) unless self.data.blank?
+    Rails.logger.debug "self.email before decryption:::: #{self.email}"
     decrypt(self.email, Rails.configuration.email_encryption_key)
+    Rails.logger.debug "self.email after decryption:::: #{self.email}"
   end
 
   def encrypt_password
     #self.data = [Encryptor.encrypt(:value => self.data, :key => Rails.configuration.encryption_key)].pack('m') unless self.data.blank?
+    Rails.logger.debug "self.password before encryption:::: #{self.password}"
     encrypt(self.password, Rails.configuration.password_encryption_key)
+    Rails.logger.debug "self.password after encryption:::: #{self.password}"
   end
 
   def decrypt_password
     #self.data = Encryptor.decrypt(:value => self.data.unpack('m').first, :key => Rails.configuration.encryption_key) unless self.data.blank?
+    Rails.logger.debug "self.password before decryption:::: #{self.password}"
     decrypt(self.password, Rails.configuration.password_encryption_key)
+    Rails.logger.debug "self.password after decryption:::: #{self.password}"
   end
 
   def encrypt(value, key)

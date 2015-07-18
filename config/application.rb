@@ -28,5 +28,11 @@ module Fiveguardoffense
     # The default locale is :en and all translations from config/locales/*.rb,yml are auto loaded.
     # config.i18n.load_path += Dir[Rails.root.join('my', 'locales', '*.{rb,yml}').to_s]
     # config.i18n.default_locale = :de
+
+    # MongoDB logging
+    Mongoid.logger.level = Logger::DEBUG if Rails.env.in? %w(development test)
+    Moped.logger.level = Logger::DEBUG if Rails.env.in? %w(development test)
+    Mongoid.logger.level = Logger::ERROR if Rails.env.in? %w(production)
+    Moped.logger.level = Logger::ERROR if Rails.env.in? %w(production)
   end
 end
