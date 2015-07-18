@@ -14,7 +14,7 @@ gem 'sdoc', '~> 0.4.0', group: :doc
 gem 'unicorn'
 gem 'capistrano-rails', group: :development
 gem 'mongoid'
-gem 'attr_encrypted'
+gem 'mongoid-encryptor'
 
 group :development, :test do
   gem 'pry'
