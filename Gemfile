@@ -15,6 +15,8 @@ gem 'unicorn'
 gem 'capistrano-rails', group: :development
 gem 'mongoid'
 gem 'attr_encrypted' #http://stackoverflow.com/questions/4343996/rails-storing-encrypted-data-in-database
+gem 'jbuilder'
+gem 'responders'
 
 group :development, :test do
   gem 'pry'
