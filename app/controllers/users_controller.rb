@@ -6,13 +6,33 @@ class UsersController < ApplicationController
   # GET /users/1
   # GET /users/1.json
   def show
-    render json: { error: "user not found" }, status: :not_found if not @user
+    #TODO: make this a before action, but after set_user
+    if not @user
+      render json: { error: "user not found" }, status: :not_found
+      return
+    end
+
+    #TODO: make this a before action, but after set_user
+    if not authorized?(api_key_params, params[:id])
+      render json: { error: "unauthorized" }, status: :unauthorized
+      return
+    end
   end
 
   # POST /users
   # POST /users.json
   def create
-    if not admin?(admin_params)
+    #TODO: make this a before_action
+    user_params #check for required parameters before any other validations
+
+    #TODO: make this a before_action
+    if params[:user] and params[:user].include? "api_key"
+      render json: { status: "invalid request parameter: user.api_key" }, status: :bad_request
+      return
+    end
+
+    #TODO: make this a before_action
+    if not admin?(api_key_params)
       render json: { error: "unauthorized"}, status: :unauthorized
       return
     end
@@ -29,11 +49,38 @@ class UsersController < ApplicationController
   # PATCH/PUT /users/1
   # PATCH/PUT /users/1.json
   def update
-      if @user.update(user_params)
-        render json: { status: "user updated successfully" }, status: :ok, location: @user
-      else
-        render json: { errors: @user.errors }, status: :unprocessable_entity
-      end
+    #TODO: make this a before action, but after set_user
+    if not @user
+      render json: { error: "user not found" }, status: :not_found
+      return
+    end
+
+    #TODO: make this a before action, but after set_user
+    if not authorized?(api_key_params, params[:id])
+      render json: { error: "unauthorized" }, status: :unauthorized
+      return
+    end
+
+    #TODO: make this a before_action
+    user_params #check for required parameters before any other validations
+
+    #TODO: make this a before_action
+    if not authorized?(api_key_params)
+      render json: { error: "unauthorized"}, status: :unauthorized
+      return
+    end
+
+    #TODO: make this a before_action
+    if params[:user] and params[:user].include? "api_key"
+      render json: { status: "invalid request parameter: user.api_key" }, status: :bad_request
+      return
+    end
+
+    if @user.update(user_params)
+      render json: { status: "user updated successfully" }, status: :ok, location: @user
+    else
+      render json: { errors: @user.errors }, status: :unprocessable_entity
+    end
   end
 
   # DELETE /users/1
@@ -41,7 +88,20 @@ class UsersController < ApplicationController
   #TODO: need to finish testing this. admin check might not work for delete
   #requests
   def destroy
-    if not admin?(admin_params)
+    #TODO: make this a before action, but after set_user
+    if not @user
+      render json: { error: "user not found" }, status: :not_found
+      return
+    end
+
+    #TODO: make this a before action, but after set_user
+    if not authorized?(api_key_params, params[:id])
+      render json: { error: "unauthorized" }, status: :unauthorized
+      return
+    end
+
+    #TODO: finish writing the rest of this message
+    if not admin?(api_key_params)
       render json: { error: "unauthorized"}, status: :unauthorized
       return
     end
@@ -52,16 +112,17 @@ class UsersController < ApplicationController
   end
 
   private
-    def set_user
-      begin
-        @user = User.find(params[:id])
-        render json: { error: "unauthorized" }, status: :unauthorized if not @user or not @user.api_key.eql? params["api_key"]
-      rescue Mongoid::Errors::DocumentNotFound
-        @user = nil
-      end
-    end
 
-    def user_params
-      params.require(:user).permit(:first_name, :last_name, :email, :password)
+  def set_user
+    begin
+      @user = User.find(params[:id])
+    rescue Mongoid::Errors::DocumentNotFound
+      @user = nil
     end
+  end
+
+  def user_params
+    params.require(:user).permit(:first_name, :last_name, :email, :password)
+  end
+
 end

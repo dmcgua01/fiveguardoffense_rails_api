@@ -14,6 +14,24 @@ class User
   attr_encrypted :password, key: Rails.configuration.password_encryption_key, encode: true
   attr_encrypted :api_key, key: Rails.configuration.api_key_encryption_key, encode: true
 
+  validates :first_name,
+    presence: true,
+    numericality: false
+
+  validates :last_name,
+    presence: true,
+    numericality: false
+
+  validates :email,
+    presence: true,
+    uniqueness: true,
+    format: { with: /[\w]+\@[\w]+\.[\w]+/, message: "must be a valid email address" }
+
+  validates :password,
+    presence: true,
+    numericality: false,
+    length: { in: 6..30 }
+
   before_create :generate_api_key
 
   def authenticated?(password)

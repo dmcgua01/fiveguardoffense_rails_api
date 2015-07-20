@@ -1,5 +1,6 @@
 source 'https://rubygems.org'
 
+ruby '2.2.2'
 
 gem 'rails', '4.2.3'
 gem 'sass-rails'
@@ -23,5 +24,14 @@ group :development, :test do
   gem 'web-console'
   gem 'spring'
   gem 'rest-client'
+  gem 'rspec-rails'
+  gem 'spring-commands-rspec'
+  gem 'guard', require: false
+  gem 'guard-rspec', require: false
+  gem 'guard-bundler', require: false
+  gem 'factory_girl_rails', require: false
 end
 
+group :production do
+  gem 'newrelic_rpm'
+end

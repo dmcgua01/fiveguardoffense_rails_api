@@ -5,12 +5,16 @@ class ApplicationController < ActionController::Base
 
   before_filter :set_default_response_format
 
-  def admin_params
+  def api_key_params
     params.require(:api_key)
   end
 
   def admin?(api_key)
-    User.all.select{ |user| user.has_api_key?(api_key) }.first
+    User.all.select{ |user| user.has_api_key?(api_key) and user.admin? }.any?
+  end
+
+  def authorized?(api_key, id)
+    User.all.select{ |user| user.has_api_key?(api_key) and user.id.to_s.eql? id }.any?
   end
 
   private
