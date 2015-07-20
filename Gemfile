@@ -9,7 +9,6 @@ gem 'coffee-rails'
 # gem 'therubyracer', platforms: :ruby
 gem 'jquery-rails'
 gem 'turbolinks'
-gem 'jbuilder'
 gem 'sdoc', group: :doc
 # gem 'bcrypt', '~> 3.1.7'
 gem 'unicorn'
